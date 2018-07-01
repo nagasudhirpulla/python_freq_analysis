@@ -10,11 +10,12 @@ import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.mlab as mlab
 from scipy.stats import norm
+import datetime as dt
 
 # fall back input folder name
 inputFolder = r'C:\Users\Nagasudhir\Documents\Python Projects\python_freq_analysis'
+numBins = 100
 
 # get the directory of the script file
 # print(os.path.dirname(os.path.realpath(__file__)))
@@ -29,14 +30,24 @@ freq_df = pd.read_excel(inputFilename)
 # calculate the variance and mean of the dataframe
 freq_mean, freq_std = norm.fit(freq_df.iloc[:, 1])
 
-numBins = 100
+# plot the histogram of data with numBins
 fig,ax = plt.subplots()
 freq_df.hist(ax=ax,bins=numBins)
-freqLims = ax.get_xlim()
 
-seriesRes = 1000
-freqSeries = np.linspace(freqLims[0], freqLims[1], seriesRes)
+# plot the ideal normal distribution
+freqSeries = np.linspace(freq_df.iloc[:, 1].min(), freq_df.iloc[:, 1].max(), numBins)
+pdfSeries = norm.pdf(freqSeries, freq_mean, freq_std)
+pdfFactor = freq_df.shape[0]/pdfSeries.sum()
+ax.plot(freqSeries,pdfFactor*pdfSeries)
 
-#pdfFactor = freq_df.shape[0]*0.5/(freq_std * np.sqrt(2 * np.pi))
-#ax.plot(freqSeries,pdfFactor*norm.pdf(freqSeries, freq_mean, freq_std))
-    
+xRanges = ax.get_xlim()
+yRanges = ax.get_ylim()
+
+axisText = 'mean = %.3f\n\nstandard=%.3f\ndeviation'%(freq_mean, freq_std)
+
+ax.text(xRanges[0] + 0.05*(xRanges[1]-xRanges[0]), yRanges[1]*0.75, axisText, style='italic',
+        bbox={'facecolor':'#eeeeee', 'alpha':0.4, 'pad':10})
+
+nowTimeStr = dt.datetime.now().strftime('%d_%m_%y_%H_%M_%S')
+figFilename = os.path.join(inputFolder, 'output_%s.png'%(nowTimeStr))
+plt.savefig(figFilename, bbox_inches='tight')
