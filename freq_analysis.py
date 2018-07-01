@@ -13,6 +13,14 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm
 import datetime as dt
 
+'''
+from argparse import ArgumentParser
+# get the arguments from command line
+parser = ArgumentParser()
+parser.add_argument("-f", "--file", help="input file folder location", default='x')
+args = parser.parse_args()
+'''
+
 # fall back input folder name
 inputFolder = r'C:\Users\Nagasudhir\Documents\Python Projects\python_freq_analysis'
 numBins = 100
@@ -43,7 +51,7 @@ ax.plot(freqSeries,pdfFactor*pdfSeries)
 xRanges = ax.get_xlim()
 yRanges = ax.get_ylim()
 
-axisText = 'mean = %.3f\n\nstandard=%.3f\ndeviation'%(freq_mean, freq_std)
+axisText = 'mean = %.3f Hz\n\nstandard=%.3f Hz\ndeviation'%(freq_mean, freq_std)
 
 ax.text(xRanges[0] + 0.05*(xRanges[1]-xRanges[0]), yRanges[1]*0.75, axisText, style='italic',
         bbox={'facecolor':'#eeeeee', 'alpha':0.4, 'pad':10})
