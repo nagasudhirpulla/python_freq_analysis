@@ -1,0 +1,6 @@
+Number of times RGMO should have acted = 6
+Mean Frequency = 49.997 Hz
+Max Frequency = 49.847 Hz
+Minimum Frequency = 50.124 Hz
+Standard Deviation = 0.043 Hz
+Frequency Variation Index, FVI = 0.019
