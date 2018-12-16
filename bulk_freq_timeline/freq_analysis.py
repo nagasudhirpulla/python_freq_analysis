@@ -10,10 +10,8 @@ y axis as the scatter plot of the timestamps where the change in freq is greater
 """
 
 import os
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import datetime as dt
 import glob
 from rgmo_detector import GetRGMOTimestamps
 
@@ -51,7 +49,7 @@ for fileIter, inputFilename in enumerate(dataFilesList):
     # get the rgmoTimestamps of this iteration
     rgmoTimestampsChunk = GetRGMOTimestamps(freq_df, freq_diff_thresh, time_col_index, freq_col_index)
     # append this to the main dataframe
-    rgmoTimestamps = pd.concat([rgmoTimestamps, rgmoTimestampsChunk])
+    rgmoTimestamps = pd.concat([rgmoTimestamps, rgmoTimestampsChunk], ignore_index=True)
 
 # split the date and time of the column 'time'
 rgmoTimestamps['time_of_day'] = rgmoTimestamps['time'].apply(lambda x: x.time())
