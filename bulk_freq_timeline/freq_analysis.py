@@ -58,3 +58,8 @@ rgmoTimestamps['date'] = rgmoTimestamps['time'].apply(lambda x: x.date())
 plt.scatter(x=rgmoTimestamps.date.values, y=rgmoTimestamps.time_of_day.values)
 
 # nowTimeStr = dt.datetime.now().strftime('%d_%m_%y_%H_%M_%S')
+'''
+writer = pd.ExcelWriter('output.xlsx')
+rgmoTimestamps.to_excel(writer,'Sheet1')
+writer.save()
+'''
